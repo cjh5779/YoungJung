@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 10f;
     Rigidbody playerRigidbody;
+    public FixedJoystick joystick;
 
     // Start is called before the first frame update
     void Start()
@@ -15,14 +16,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float xInput = Input.GetAxis("Horizontal");
-        float zInput = Input.GetAxis("Vertical");
-
-        float xSpeed = xInput * speed;
-        float zSpeed = zInput * speed;
-
-        Vector3 newVelocity = new Vector3(xSpeed, 0f, zSpeed);
-        playerRigidbody.velocity = newVelocity;
         
+    }
+
+    void FixedUpdate()
+    {
+        float moveHorizontal = joystick.Horizontal;
+        float moveVertical = joystick.Vertical;
+
+        Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
+        playerRigidbody.AddForce(movement * speed);
     }
 }
